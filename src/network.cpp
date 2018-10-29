@@ -1,10 +1,9 @@
 #include "network.h"
 #include "random.h"
-#include <iostream>
+#include <stdexcept>
 
 void Network::resize(const size_t& n)
 {
-    links.clear();
     values.clear();
     RandomNumbers num;
     for(size_t i(0); i<n; ++i)
@@ -17,9 +16,14 @@ bool Network::add_link(const size_t& first, const size_t& second)
 {
     if(first<size() and second<size() and first!=second)
     {
-        links.insert({first,second});
-        links.insert({second,first});
-        return true;
+        auto iterator = links.find(first);
+        
+        if( iterator == links.end() or iterator->second != second)
+        {
+            links.insert({first,second});
+            links.insert({second,first});
+            return true;
+        }
     }
     return false;
 }
@@ -70,7 +74,14 @@ size_t Network::degree(const size_t& n) const
 
 double Network::value(const size_t& n) const
 {
-   return values[n];
+    if(n<size())
+    {
+        return values[n];
+    }else
+    {
+        throw std::runtime_error("Valeur demandée inexistante");
+    }
+    return 0;
 }
 
 std::vector<double> Network::sorted_values() const
