@@ -32,14 +32,16 @@ size_t Network::random_connect(const double& value_)
 {
     size_t number_of_links(0);
     links.clear();
-    for(size_t j(0);j<values.size();++j)
+    size_t values_size(size());
+    RandomNumbers num;
+    RandomNumbers rand;
+    
+    for(size_t j(0);j<values_size;++j)
     {
-        RandomNumbers num;
-        int degree (num.poisson(value_));
+        size_t degree (num.poisson(value_));
         if(degree<0) degree=0;
-        for(size_t i(0); i<degree ;++i)
+        for(int i(0); i<degree ;++i)
         {
-            RandomNumbers rand;
             if(add_link(j,rand.uniform_double(0,values.size()-1)))
             {
                 ++number_of_links;
