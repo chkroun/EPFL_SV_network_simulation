@@ -38,7 +38,7 @@ size_t Network::random_connect(const double& value_)
     
     for(size_t j(0);j<values_size;++j)
     {
-        size_t degree (num.poisson(value_));
+        int degree (num.poisson(value_));
         if(degree<0) degree=0;
         for(int i(0); i<degree ;++i)
         {
