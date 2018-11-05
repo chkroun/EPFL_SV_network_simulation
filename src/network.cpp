@@ -33,18 +33,21 @@ size_t Network::random_connect(const double& value_)
     size_t number_of_links(0);
     links.clear();
     size_t values_size(size());
-    RandomNumbers num;
-    RandomNumbers rand;
     
     for(size_t j(0);j<values_size;++j)
     {
-        int degree (num.poisson(value_));
-        if(degree<0) degree=0;
-        for(int i(0); i<degree ;++i)
+        size_t degree_ (RNG.poisson(value_));
+        if(degree_>(values_size-1))
         {
-            if(add_link(j,rand.uniform_double(0,values.size()-1)))
+            degree_=(values_size-1);
+        }
+        for(size_t i(0);i<degree_;++i)
+        {
+            if(add_link(j,RNG.uniform_double(0,values_size-1)))
             {
                 ++number_of_links;
+            }else{
+                --i;
             }
         }
     }
