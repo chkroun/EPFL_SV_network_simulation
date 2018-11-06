@@ -56,9 +56,24 @@ size_t Network::random_connect(const double& value_)
 
 size_t Network::set_values(const std::vector<double>& tab_values)
 {
-    resize(0);
-    values = tab_values;
-    return values.size();
+    size_t values_size(size());
+    size_t tab_values_size(tab_values.size());
+    if(tab_values_size <= values_size)
+    {
+        for(size_t i(0);i<tab_values_size;++i)
+        {
+            values[i]=tab_values[i];
+        }
+        return tab_values_size;
+    } else
+    {
+        for(size_t i(0);i<values_size;++i)
+        {
+            values[i]=tab_values[i];
+        }
+        return values_size;
+    }
+    return 0;
 }
 
 size_t Network::size() const
